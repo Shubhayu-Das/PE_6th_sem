@@ -35,19 +35,31 @@
 
 		The motor needs to be capable of assisting the rotational movement of the knee joint. In a majority of the target exercises, this involves lifting the leg(the shin and the foot), along with the lower part of the harness. For an assumed peak angular velocity of the knee joint, we can work out the peak and continuous torque requirements. Being a widely researched field, journal [1] was referred to, which summarizes the approaches of a variety of research teams.\\
 
+	\pagebreak
 	\section{Simulation}
-		The simulation was performed using the Webots R2021a stable release on Windows 10. The setup can be seen in the following images:
+		The simulation was performed using the Webots R2021a stable release on Windows 10. The setup can be seen in the following image:
+
+		\begin{center}
+			\includegraphics[width=\linewidth]{"../images/sideview.png"}
+			\title{An image of the simulation setup. The position of the box indicates the "right" side, wrt to the humanoid robot.}
+		\end{center}
 
 		The simulation was performed using the following parameters:
 		\begin{itemize}
-			\item Torso mass:
+			\item Mass of the torso+thighs(in yellow): 50kg
+			\item Mass of each shin, along with assumed harness weight(cylinder down from the knee joint): 10kg
+			\item Peak angular velocity: nearly $\pi$ rad/s
+			\item Simulation timestep: 32ms
 		\end{itemize}
 
-		The positions of each of the mobile joints are monitored and logged in to a csv file. The relevant parameters are then plotted separately to visualize the torque requirements, as a function of the angular position.
+		The positions of each of the mobile joints are monitored and logged after every 8 simulation updates in a csv file. The relevant parameters are then plotted separately to visualize the torque requirements, as a function of the angular position. This plot is show in the plot on the next page.
 
-		% Add the plots here
+		\begin{center}
+			\includegraphics[width=\linewidth]{"../images/sim_results.png"}
+			\title{Plot of the data output by the simulation. The blue line shows the angular difference between the setpoint and the current position in radians. The orange line shows the current angular position in radians. The green line shows the torque output from the motor at the "right" knee in Nm.}
+		\end{center}
 
-		Note that the PID control is the default controller in Webots. Further tuning can help smooth out the spikes in the torque plots. These spikes bring out the limitations of simulations.
+		Note that the PID control is the default controller in Webots. Further tuning can help smooth out the spikes in the torque plots. These spikes bring out the limitations of simulations. Further, the torque values are negative due to the frame of reference of the knee joint.
 
 	\section{Literature Review}
 		Several papers were referred to, to verify and confirm the validity of the torque simulations. A variety of papers report extremely high torque requirements(>100Nm), which are unrealistic. Kong et. al. [2, figure 3], report the torque needed, as a function of the angular velocity. Their modelling is to \textit{fully} support a walking human, which is out of scope for this project. However, the design can be adapted to accomodate for this posibility as well.
@@ -80,6 +92,11 @@
 		Good hardware is only half of the story. Proper BLDC control is impossible without proper driver control software. The MIT Mini Cheetah driver implements Field Oriented Control(FOC), using position feedback from the encoder, and torque feedback from the low-side current sense resistors. The DRV8323R motor driver facilitates the torque feedback by providing internal gain amplifiers and buffers. In this project, we directly utilize Ben Katz's driver code(Github source),as we are using his drivers. Some parameters like the PID gains, reduction ratios etc have to be calibrated depending on the actual hardware being used.\\
 
 		The exact working principle of FOC can span several books. I have summarized my understanding in the source Github repository. The content of the repository are subject to change, during the active duration of this project.
+
+	\section{Pending work}
+		The COVID-19 pandemic prevented me from staying and working in the campus. As a result, none of the concepts mentioned above have actually beem tested. The motors, along with the requisite power supply are available in campus.\\
+
+		 I collected two STM32F4 Discovery boards from the CEEMS lab, to try and learn how to work with their ecosystem. I successfully tested a lot of other features, but my attempts to setup CAN communication between the two boards failed, due to lack of proper transceivers. I procured the requisite tranceivers, but couldn't use them due to lack of soldering equipment at home. These components will be duly returned to the labs whenever possible.
 
 	\pagebreak
 	\section{References}
@@ -115,7 +132,7 @@
 			\item \href{https://github.com/bgkatz/motorcontrol}{Ben Katz's updated motor control code, re-written to work with the STM32CubeIDE}
 			\item \href{https://github.com/bgkatz/3phase_integrated}{Ben Katz's original motor driver code, used in the MIT Mini Cheetah project.}
 			\item \href{https://github.com/mjbots/moteus}{MJ Bots alternative firmware for the MIT Mini Cheetah motor driver.} Need to check for compatibility, as they have redesigned the hardware slightly. Their KiCAD PCB schematics are available in the repository too.
-			\item \href{https://github.com/G-Levine/OpenTorque-Actuator}{G. Levine's extensive design for a planetary reliable gearbox.} This can be used as a reference for our design.
+			\item \href{https://github.com/G-Levine/OpenTorque-Actuator}{Gabrael Levine's extensive design for a planetary reliable gearbox.} This can be used as a reference for our design.
 			\item \href{https://github.com/STMicroelectronics/STM32CubeF4}{STM's firmware packages for STM32F4 line of MCUs.} Contains good examples, and is downloaded and used by STM32CubeIDE.
 		\end{itemize}
 \end{document}

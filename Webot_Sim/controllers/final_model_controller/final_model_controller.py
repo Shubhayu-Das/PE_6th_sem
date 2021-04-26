@@ -91,7 +91,7 @@ while robot.step(timestep) != -1:
     rightKneeMotor.setPosition(desiredPosition)
 
     if counter == 0 and constants.DEBUG:
-        print(f"Encoder positions:\n\tLeft knee: <disabled>{0}\tRight knee: {rightPosition}")
+        print(f"Encodzer positions:\n\tLeft knee: <disabled>{0}\tRight knee: {rightPosition}")
         print(f"Angular distance to set point: {delta}\tstep size: {stepSize}")
 
     counter = (counter + 1) % 8

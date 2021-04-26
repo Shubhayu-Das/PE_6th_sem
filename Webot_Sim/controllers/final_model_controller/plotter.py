@@ -1,10 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-fileName = "data/sim_results_14_04_2021_14_14.csv"
+fileName = "data/sim_results_14_04_2021_14_54.csv"
 
 tracking = pd.read_csv(fileName)
-t = [x*0.256 for x in range(0, len(tracking))]
+t = [x*1/(32*8) for x in range(0, len(tracking))]
 
 plt.figure(figsize=(14, 10))
 plt.plot(t, tracking["right_motor_delta"])
