@@ -1,0 +1,170 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "Final simulation for PE project"
+  ]
+  title "Human knee joint simulation"
+  coordinateSystem "NUE"
+  randomSeed 6
+}
+Viewpoint {
+  orientation 0.0402274126924578 0.9983661360643431 0.040580951541636254 4.702003855261
+  position -6.324710580043443 0.9672438339680848 -0.49733598896680253
+}
+TexturedBackground {
+}
+RectangleArena {
+  floorSize 3 3
+  wallHeight 0.05
+}
+DirectionalLight {
+  direction 5 -2 -4
+  intensity 4
+}
+WoodenBox {
+  translation -0.91 0.13 0.93
+  size 0.6 0.2 0.6
+}
+WoodenChair {
+  translation 0 0 -1.14
+  physics Physics {
+    density -1
+    mass 10
+  }
+}
+DEF humanoid_robot Robot {
+  translation 0 0.95 -1.23
+  children [
+    DEF left_knee_joint HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0.15 -0.35 0.35
+      }
+      device [
+        DEF left_knee_position PositionSensor {
+          name "left_knee_sensor"
+        }
+        DEF left_knee_motor RotationalMotor {
+          name "left_knee_motor"
+          maxTorque 24
+        }
+      ]
+      endPoint DEF left_shin_solid Solid {
+        translation 0.145 -0.55 0.385
+        rotation 1 0 0 0
+        children [
+          DEF left_shin_shape Shape {
+            appearance PBRAppearance {
+              baseColor 1 0.470588 0.164706
+              roughness 0.5
+            }
+            geometry Cylinder {
+              height 0.4
+              radius 0.05
+            }
+            castShadows FALSE
+          }
+        ]
+        name "left_shin(1)"
+        boundingObject USE left_shin_shape
+        physics Physics {
+          density -1
+          mass 10
+        }
+      }
+    }
+    DEF right_knee_joint HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0.15 -0.35 0.35
+      }
+      device [
+        DEF right_knee_position PositionSensor {
+          name "right_knee_sensor"
+        }
+        DEF right_knee_motor RotationalMotor {
+          name "right_knee_motor"
+          maxTorque 24
+        }
+      ]
+      endPoint DEF right_shin_solid Solid {
+        translation -0.145 -0.55 0.385
+        rotation 1 0 0 0
+        children [
+          DEF right_shin_shape Shape {
+            appearance PBRAppearance {
+              baseColor 1 0.470588 0.164706
+              roughness 0.5
+            }
+            geometry Cylinder {
+              height 0.4
+              radius 0.05
+            }
+            castShadows FALSE
+          }
+        ]
+        name "right_shin"
+        boundingObject USE right_shin_shape
+        physics Physics {
+          density -1
+          mass 10
+        }
+      }
+    }
+    DEF torso_solid_group Group {
+      children [
+        DEF right_thigh_transform Transform {
+          translation -0.15 -0.35 0.13
+          rotation 1 0 0 1.571
+          children [
+            DEF left_thigh_shape Shape {
+              appearance PBRAppearance {
+                baseColor 1 0.913725 0.27451
+                roughness 0.5
+              }
+              geometry Cylinder {
+                height 0.4
+                radius 0.1
+              }
+              castShadows FALSE
+            }
+          ]
+        }
+        DEF left_thigh_transform Transform {
+          translation 0.15 -0.35 0.13
+          rotation 1 0 0 1.571
+          children [
+            DEF left_thigh_shape Shape {
+              appearance PBRAppearance {
+                baseColor 1 0.913725 0.27451
+                roughness 0.5
+              }
+              geometry Cylinder {
+                height 0.4
+                radius 0.1
+              }
+              castShadows FALSE
+            }
+          ]
+        }
+        DEF torso_shape Shape {
+          appearance DEF static_appearance PBRAppearance {
+            baseColor 1 0.913725 0.27451
+            roughness 0.5
+            name "static_appearance"
+          }
+          geometry DEF torso Box {
+            size 0.5 0.6 0.12
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+  ]
+  name "humanoid"
+  boundingObject USE torso_solid_group
+  physics Physics {
+    density -1
+    mass 50
+  }
+  locked TRUE
+  controller "final_model_controller"
+}

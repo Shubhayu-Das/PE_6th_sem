@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}Problem Statement}{2}{section.1}%
+\contentsline {section}{\numberline {2}Approach}{2}{section.2}%
+\contentsline {section}{\numberline {3}Simulation}{2}{section.3}%
+\contentsline {section}{\numberline {4}Literature Review}{2}{section.4}%
+\contentsline {section}{\numberline {5}Selected hardware}{3}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Motors}{3}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Gear box}{3}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Motor driver}{3}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Master controller}{4}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Control Software}{4}{section.6}%
+\contentsline {section}{\numberline {7}References}{5}{section.7}%
